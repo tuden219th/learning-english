@@ -1,5 +1,4 @@
-
-
+import TudenMark from "@/components/TudenMark";
 import {
   courses,
   languages,
@@ -27,7 +26,10 @@ export default function Home() {
     .sort((a, b) => a.order - b.order);
 
   return (
+    
     <main className="min-h-screen bg-slate-950 text-white">
+      <TudenMark />
+
       {/* HEADER */}
       <header className="border-b border-white/10">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
