@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   courses,
@@ -9,6 +10,43 @@ type CoursePageProps = {
     courseId: string;
   }>;
 };
+
+export async function generateMetadata({
+  params,
+}: CoursePageProps): Promise<Metadata> {
+  const { courseId } = await params;
+
+  const course = courses.find((item) => item.id === courseId);
+
+  if (!course) {
+    return {
+      title: "Course Not Found",
+      description: "The requested English course could not be found.",
+    };
+  }
+
+  return {
+    title: `${course.title} — ${course.level}`,
+    description: course.description,
+
+    alternates: {
+      canonical: `/course/${course.id}`,
+    },
+
+    openGraph: {
+      type: "website",
+      title: `${course.title} — ${course.level}`,
+      description: course.description,
+      url: `/course/${course.id}`,
+      siteName: "English Từ Đến",
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 export default async function CoursePage({
   params,

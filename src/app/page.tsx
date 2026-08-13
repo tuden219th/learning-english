@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+
 import TudenMark from "@/components/TudenMark";
 import {
   courses,
@@ -7,14 +10,40 @@ import {
   lessons,
 } from "@/features/learning/catalog";
 
-import Link from "next/link";
+export const metadata: Metadata = {
+  title: "Learn English for Real Life",
+  description:
+    "English Từ Đến is a practical English learning platform with structured courses, real-life lessons, speaking practice, vocabulary, listening, and activities.",
 
+  alternates: {
+    canonical: "/",
+  },
+
+  openGraph: {
+    type: "website",
+    title: "Learn English for Real Life | English Từ Đến",
+    description:
+      "Learn practical English through structured courses, real-life lessons, speaking practice, vocabulary, and activities.",
+    url: "/",
+    siteName: "English Từ Đến",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+const BASE_URL = "https://english.tudencafe.com";
 
 export default function Home() {
-  const english = languages.find((language) => language.id === "english");
+  const english = languages.find(
+    (language) => language.id === "english",
+  );
 
   const path = learningPaths.find(
-    (learningPath) => learningPath.id === "english-singapore-cafe-owner",
+    (learningPath) =>
+      learningPath.id === "english-singapore-cafe-owner",
   );
 
   const course = courses.find(
@@ -25,9 +54,36 @@ export default function Home() {
     .filter((module) => module.courseId === course?.id)
     .sort((a, b) => a.order - b.order);
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        name: "English Từ Đến",
+        url: BASE_URL,
+        description:
+          "A practical English learning platform for real-life communication.",
+        inLanguage: "en",
+      },
+      {
+        "@type": "Organization",
+        name: "English Từ Đến",
+        url: BASE_URL,
+        description:
+          "A practical English learning platform with structured courses and real-life lessons.",
+      },
+    ],
+  };
+
   return (
-    
     <main className="min-h-screen bg-slate-950 text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
+
       <TudenMark />
 
       {/* HEADER */}
@@ -109,7 +165,9 @@ export default function Home() {
         <div className="grid gap-4 md:grid-cols-2">
           {courseModules.map((module) => {
             const moduleLessons = lessons
-              .filter((lesson) => lesson.moduleId === module.id)
+              .filter(
+                (lesson) => lesson.moduleId === module.id,
+              )
               .sort((a, b) => a.order - b.order);
 
             return (
@@ -120,7 +178,8 @@ export default function Home() {
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <p className="text-sm text-emerald-400">
-                      Module {String(module.order).padStart(2, "0")}
+                      Module{" "}
+                      {String(module.order).padStart(2, "0")}
                     </p>
 
                     <h3 className="mt-2 text-xl font-semibold">

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   courses,
@@ -11,6 +12,49 @@ type ModulePageProps = {
     moduleId: string;
   }>;
 };
+
+export async function generateMetadata({
+  params,
+}: ModulePageProps): Promise<Metadata> {
+  const { moduleId } = await params;
+
+  const module = modules.find((item) => item.id === moduleId);
+
+  if (!module) {
+    return {
+      title: "Module Not Found",
+      description: "The requested English learning module could not be found.",
+    };
+  }
+
+  const course = courses.find(
+    (item) => item.id === module.courseId,
+  );
+
+  const title = `${module.title} — ${course?.title ?? "English Từ Đến"}`;
+
+  return {
+    title,
+    description: module.description,
+
+    alternates: {
+      canonical: `/module/${module.id}`,
+    },
+
+    openGraph: {
+      type: "website",
+      title,
+      description: module.description,
+      url: `/module/${module.id}`,
+      siteName: "English Từ Đến",
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 export default async function ModulePage({
   params,

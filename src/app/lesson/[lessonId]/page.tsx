@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import {
@@ -14,6 +15,53 @@ type LessonPageProps = {
     lessonId: string;
   }>;
 };
+
+export async function generateMetadata({
+  params,
+}: LessonPageProps): Promise<Metadata> {
+  const { lessonId } = await params;
+
+  const lesson = lessons.find((item) => item.id === lessonId);
+
+  if (!lesson) {
+    return {
+      title: "Lesson Not Found",
+      description: "The requested English lesson could not be found.",
+    };
+  }
+
+  const module = modules.find(
+    (item) => item.id === lesson.moduleId,
+  );
+
+  const course = courses.find(
+    (item) => item.id === module?.courseId,
+  );
+
+  const title = `${lesson.title} — ${course?.title ?? "English Từ Đến"}`;
+
+  return {
+    title,
+    description: lesson.description,
+
+    alternates: {
+      canonical: `/lesson/${lesson.id}`,
+    },
+
+    openGraph: {
+      type: "article",
+      title,
+      description: lesson.description,
+      url: `/lesson/${lesson.id}`,
+      siteName: "English Từ Đến",
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 export default async function LessonPage({
   params,
@@ -42,8 +90,42 @@ export default async function LessonPage({
 
   const lessonActivities = getLessonActivities(lesson.id);
 
+  const lessonUrl =
+    `https://english.tudencafe.com/lesson/${lesson.id}`;
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    name: lesson.title,
+    description: lesson.description,
+    url: lessonUrl,
+    inLanguage: "en",
+    educationalLevel: "Beginner",
+    learningResourceType: "Lesson",
+    isPartOf: {
+      "@type": "Course",
+      name: course?.title ?? "English Từ Đến",
+      url: course
+        ? `https://english.tudencafe.com/course/${course.id}`
+        : "https://english.tudencafe.com",
+    },
+    teaches: lesson.title,
+    provider: {
+      "@type": "Organization",
+      name: "English Từ Đến",
+      url: "https://english.tudencafe.com",
+    },
+  };
+
   return (
     <main className="min-h-screen bg-slate-950 text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
+
       <div className="mx-auto max-w-3xl px-6 py-12">
         <Link
           href={`/module/${module?.id}`}
