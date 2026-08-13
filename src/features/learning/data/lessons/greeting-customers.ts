@@ -1,0 +1,146 @@
+﻿import type { Activity, Lesson } from "@/types/learning";
+
+export const greetingCustomersLesson: Lesson = {
+  id: "lesson-greeting-customers",
+  moduleId: "cafe-customers",
+  title: "Greeting Customers",
+  description: "Learn how to welcome customers naturally.",
+  order: 1,
+  activities: [],
+  isActive: true,
+};
+
+export const greetingCustomersActivities: Activity[] = [
+  {
+    id: "greeting-vocabulary-01",
+    lessonId: "lesson-greeting-customers",
+    type: "vocabulary",
+    title: "Welcome",
+    instructions: "Learn this useful word for welcoming customers.",
+    order: 1,
+    isRequired: true,
+    content: {
+      kind: "vocabulary",
+      word: "welcome",
+      meaning: "chào mừng",
+      example: "Welcome to our café.",
+      pronunciation: "WEL-kəm",
+    },
+  },
+  {
+    id: "greeting-vocabulary-02",
+    lessonId: "lesson-greeting-customers",
+    type: "vocabulary",
+    title: "Customer",
+    instructions: "Learn this word for a person who buys something.",
+    order: 2,
+    isRequired: true,
+    content: {
+      kind: "vocabulary",
+      word: "customer",
+      meaning: "khách hàng",
+      example: "The customer is waiting for an order.",
+      pronunciation: "KUS-tə-mər",
+    },
+  },
+  {
+    id: "greeting-vocabulary-03",
+    lessonId: "lesson-greeting-customers",
+    type: "vocabulary",
+    title: "Morning",
+    instructions: "Learn this word for the early part of the day.",
+    order: 3,
+    isRequired: true,
+    content: {
+      kind: "vocabulary",
+      word: "morning",
+      meaning: "buổi sáng",
+      example: "Good morning!",
+      pronunciation: "MOR-ning",
+    },
+  },
+  {
+    id: "greeting-listening-01",
+    lessonId: "lesson-greeting-customers",
+    type: "listening",
+    title: "Listen and Understand",
+    instructions:
+      "Listen to the greeting and practice understanding the sentence.",
+    order: 4,
+    isRequired: true,
+    content: {
+      kind: "listening",
+      transcript: "Good morning. Welcome to our café.",
+      audioUrl: "/audio/lessons/greeting-01.mp3",
+    },
+  },
+  {
+    id: "greeting-practice-01",
+    lessonId: "lesson-greeting-customers",
+    type: "practice",
+    title: "Understand the Greeting",
+    instructions: "Choose the sentence that welcomes the customer.",
+    order: 5,
+    isRequired: true,
+    content: {
+      kind: "practice",
+      question: "Which sentence is a friendly greeting?",
+      options: [
+        "Good morning. Welcome to our café.",
+        "Give me your order.",
+        "The customer is waiting.",
+      ],
+      answer: "Good morning. Welcome to our café.",
+    },
+  },
+  {
+    id: "greeting-speaking-01",
+    lessonId: "lesson-greeting-customers",
+    type: "speaking",
+    title: "Say It",
+    instructions: "Practice saying this sentence aloud.",
+    order: 6,
+    isRequired: true,
+    content: {
+      kind: "speaking",
+      prompt: "Good morning. Welcome to our café.",
+      expectedAnswer: "Good morning. Welcome to our café.",
+    },
+  },
+  {
+    id: "greeting-practice-02",
+    lessonId: "lesson-greeting-customers",
+    type: "practice",
+    title: "Complete the Greeting",
+    instructions: "Choose the correct word to complete the sentence.",
+    order: 7,
+    isRequired: true,
+    content: {
+      kind: "practice",
+      question: "Good morning. _____ to our café.",
+      options: ["Welcome", "Customer", "Order"],
+      answer: "Welcome",
+    },
+  },
+  {
+    id: "greeting-practice-03",
+    lessonId: "lesson-greeting-customers",
+    type: "practice",
+    title: "Customer Challenge",
+    instructions:
+      "Imagine a customer walks into your café in the morning. Choose the most natural greeting.",
+    order: 8,
+    isRequired: true,
+    content: {
+      kind: "practice",
+      question:
+        "A customer walks into your café at 9 AM. What do you say?",
+      options: [
+        "Good morning. Welcome!",
+        "Give me your money.",
+        "What do you want?",
+      ],
+      answer: "Good morning. Welcome!",
+    },
+  },
+];
